@@ -1,4 +1,12 @@
 class User < ApplicationRecord
+
+  #一人のユーザーは複数の投稿ができる
+  has_many :posts, dependent: :destroy
+  #has_manyで1対多の関係を表す(書くときは１の側に書く)反対に多の方にはbelongs_toが使われる
+
+  #dependent: :destroyが付くとオブジェクトが削除されるときに、関連するものも消えるようになる
+  # 例： ユーザーが削除されれば投稿内容も消える的なやつ
+
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,

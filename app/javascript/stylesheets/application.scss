@@ -4,6 +4,10 @@
 
 @import 'common';
 
+//users
 @import 'users/devise';
 @import 'users/show';
 @import 'users/edit';
+
+// posts
+@import 'posts/posts';
