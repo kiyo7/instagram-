@@ -4,6 +4,8 @@ class PostsController < ApplicationController
   #今回の場合postsコントローラーのアクションを実行する前にこれを読み込む
   before_action :authenticate_user! #deviseのメソッド ユーザーがログインしているかを確認する。ログインしていない場合はログインページにリダイレクト
 
+  before_action :set_post, only: %i(show destroy)
+
   def new
     @post = Post.new
     @post.photos.build
@@ -28,6 +30,18 @@ def index
   #limitは取り出すレコード数の上限を指定する（今回は10件
 end
 
+def show
+end
+
+def destroy
+  if @post.user == current_user
+    flash[:notice] = "投稿が削除されました" if @post.destroy #destroyはデータベースから削除するメソッド
+  else
+    flash[:alert] = "投稿の削除に失敗しました"
+  end
+  redirect_to root_path
+end
+
 private
 
   #privateメソッドを呼び出すときはレシーバを指定できない
@@ -36,6 +50,10 @@ private
 
   def post_params
     params.require(:post).permit(:caption, photos_attributes: [:image]).merge(user_id: current_user.id)
+  end
+
+  def set_post
+    @post = Post.find_by(id: params[:id]) #受け取ったHTTPリクエストからidを判別し、指定の投稿1つを@postに代入
   end
 
 # paramsとは送られてきたリクエスト情報をひとまとめにしたもの
