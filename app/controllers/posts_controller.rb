@@ -15,6 +15,7 @@ class PostsController < ApplicationController
 
 def create
   @post = Post.new(post_params) #privateのpost_paramsメソッドを引数に呼んでいる
+
   if @post.photos.present? #投稿の写真の有無で分岐
     @post.save
     redirect_to root_path
