@@ -11,13 +11,11 @@ Rails.application.routes.draw do
   resources :posts, only: %i(new create index show destroy) do 
     resources :photos, only: %i(create) #ネストすることによって親子関係を表せる
     # 今回の例で言うと写真は投稿がないといけない
-    
-    resources :likes, only: %i(create destroy)  
+
+    resources :likes, only: %i(create destroy)
+    resources :comments, only: %i(create destroy)
   end
-
-
 end
-
 
 
 # resourcesメソッドは自動で7つのアクションルーティングを

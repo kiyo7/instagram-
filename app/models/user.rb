@@ -2,6 +2,8 @@ class User < ApplicationRecord
 
   has_many :likes
 
+  has_many :comments
+
   #一人のユーザーは複数の投稿ができる
   has_many :posts, dependent: :destroy
   #has_manyで1対多の関係を表す(書くときは１の側に書く)反対に多の方にはbelongs_toが使われる
